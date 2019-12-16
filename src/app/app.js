@@ -18,7 +18,7 @@ export default class App extends React.Component {
     }
     async componentDidMount() {
         const { data } = await axios.get("/api/app");
-        this.setState(data.userData);
+        this.setState(data);
     }
     render() {
         if (!this.state.id) {
@@ -90,42 +90,6 @@ export default class App extends React.Component {
                                     }
                                     showUploadOption={() =>
                                         this.setState({ uploaderVisible: true })
-                                    }
-                                    krankenkasseName={
-                                        this.state.krankenkasse_name
-                                    }
-                                    krankenkasseType={
-                                        this.state.krankenkasse_coverage
-                                    }
-                                    patientHistory={this.state.history}
-                                    patientRecommendations={
-                                        this.state.recommendations
-                                    }
-                                    patientSurgery={this.state.surgery}
-                                    patientHospital={this.state.hospital}
-                                    patientMedication={this.state.medication}
-                                    patientDisease={this.state.diseases}
-                                    patientImportant={this.state.important}
-                                    updateKrankenkasseName={krankenkasseName =>
-                                        this.setState({ krankenkasseName })
-                                    }
-                                    updateKrankenkasseType={krankenkasseType =>
-                                        this.setState({ krankenkasseType })
-                                    }
-                                    updatePatientSurgery={patientSurgery =>
-                                        this.setState({ patientSurgery })
-                                    }
-                                    updatePatientHospital={patientHospital =>
-                                        this.setState({ patientHospital })
-                                    }
-                                    updatePatientMedication={patientMedication =>
-                                        this.setState({ patientMedication })
-                                    }
-                                    updatePatientDisease={patientDisease =>
-                                        this.setState({ patientDisease })
-                                    }
-                                    updatePatientImportant={patientImportant =>
-                                        this.setState({ patientImportant })
                                     }
                                 />
                             )}

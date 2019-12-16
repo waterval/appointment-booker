@@ -7,23 +7,7 @@ export default function UserProfile({
     surname,
     image,
     showUploadOption,
-    displaySize,
-    krankenkasseName,
-    krankenkasseType,
-    patientSurgery,
-    patientHospital,
-    patientMedication,
-    patientDisease,
-    patientImportant,
-    patientHistory,
-    patientRecommendations,
-    updateKrankenkasseName,
-    updateKrankenkasseType,
-    updatePatientSurgery,
-    updatePatientHospital,
-    updatePatientMedication,
-    updatePatientDisease,
-    updatePatientImportant
+    displaySize
 }) {
     return (
         <div>
@@ -54,24 +38,7 @@ export default function UserProfile({
                 </p>
             </div>
             <div>
-                <EditInformation
-                    krankenkasseName={krankenkasseName}
-                    krankenkasseType={krankenkasseType}
-                    patientSurgery={patientSurgery}
-                    patientHospital={patientHospital}
-                    patientMedication={patientMedication}
-                    patientDisease={patientDisease}
-                    patientImportant={patientImportant}
-                    patientHistory={patientHistory}
-                    patientRecommendations={patientRecommendations}
-                    updateKrankenkasseName={updateKrankenkasseName}
-                    updateKrankenkasseType={updateKrankenkasseType}
-                    updatePatientSurgery={updatePatientSurgery}
-                    updatePatientHospital={updatePatientHospital}
-                    updatePatientMedication={updatePatientMedication}
-                    updatePatientDisease={updatePatientDisease}
-                    updatePatientImportant={updatePatientImportant}
-                />
+                <EditInformation />
             </div>
         </div>
     );
