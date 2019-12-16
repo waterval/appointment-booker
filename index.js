@@ -135,9 +135,9 @@ app.get("/api/app", async (request, response) => {
             patientHospital: userData.hospital,
             patientMedication: userData.medication,
             patientDisease: userData.diseases,
-            patientImportant: userData.recommendations,
-            patientHistory: userData.important,
-            patientRecommendations: userData.history
+            patientImportant: userData.important,
+            patientHistory: userData.history,
+            patientRecommendations: userData.recommendations
         });
     } catch (error) {
         console.log("error inside get /api/app: ", error);
