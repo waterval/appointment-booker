@@ -114,8 +114,7 @@ export default function EditInformation() {
                 </div>
             )}
             <div>
-                {(values.patientHistory ||
-                    this.state.patientRecommendations) && (
+                {(values.patientHistory || values.patientRecommendations) && (
                     <h2>Doctors notes</h2>
                 )}
                 {values.patientHistory && (
