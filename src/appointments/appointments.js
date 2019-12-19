@@ -114,61 +114,65 @@ export default function Appointments({ id: userId }) {
                     </p>
                 )}
             </div>
-            <div className="appointment-options-container">
-                <div>
-                    <h4>Weekday:</h4>
-                    <select
-                        name="preferredDay"
-                        onChange={event => setWeekDay(event.target.value)}
-                    >
-                        <option value="day">All</option>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                    </select>
+            {!showAppointment && (
+                <div className="appointment-options-container">
+                    <div>
+                        <h4>Weekday:</h4>
+                        <select
+                            name="preferredDay"
+                            onChange={event => setWeekDay(event.target.value)}
+                        >
+                            <option value="day">All</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h4>From:</h4>
+                        <select
+                            name="preferredBeginTime"
+                            onChange={event => setStartTime(event.target.value)}
+                        >
+                            <option value="0">Any time</option>
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h4>Until:</h4>
+                        <select
+                            name="preferredEndTime"
+                            onChange={event => setEndTime(event.target.value)}
+                        >
+                            <option value="24">Any time</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h4>Type:</h4>
+                        <select
+                            name="preferredTime"
+                            onChange={event =>
+                                setAppointmentType(event.target.value)
+                            }
+                        >
+                            <option value="regularAppointment">Regular</option>
+                            <option value="firstAppointment">First Time</option>
+                            <option value="emergencyAppointment">
+                                Emergency
+                            </option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <h4>From:</h4>
-                    <select
-                        name="preferredBeginTime"
-                        onChange={event => setStartTime(event.target.value)}
-                    >
-                        <option value="0">Any time</option>
-                        <option value="10">10:00</option>
-                        <option value="11">11:00</option>
-                        <option value="13">13:00</option>
-                        <option value="14">14:00</option>
-                    </select>
-                </div>
-                <div>
-                    <h4>Until:</h4>
-                    <select
-                        name="preferredEndTime"
-                        onChange={event => setEndTime(event.target.value)}
-                    >
-                        <option value="24">Any time</option>
-                        <option value="11">11:00</option>
-                        <option value="12">12:00</option>
-                        <option value="14">14:00</option>
-                        <option value="15">15:00</option>
-                    </select>
-                </div>
-                <div>
-                    <h4>Type:</h4>
-                    <select
-                        name="preferredTime"
-                        onChange={event =>
-                            setAppointmentType(event.target.value)
-                        }
-                    >
-                        <option value="regularAppointment">Regular</option>
-                        <option value="firstAppointment">First Time</option>
-                        <option value="emergencyAppointment">Emergency</option>
-                    </select>
-                </div>
-            </div>
+            )}
             <div>
                 {appointmentType == "emergencyAppointment" && (
                     <p className="warning-message">
@@ -181,7 +185,8 @@ export default function Appointments({ id: userId }) {
                 )}
             </div>
             <div>
-                {appointmentType != "emergencyAppointment" &&
+                {!showAppointment &&
+                    appointmentType != "emergencyAppointment" &&
                     appointmentsPerDay &&
                     Object.keys(appointmentsPerDay).map(appointment => {
                         const day = appointmentsPerDay[appointment];
