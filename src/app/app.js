@@ -3,7 +3,6 @@ import axios from "./axios";
 import { Route, BrowserRouter, NavLink } from "react-router-dom";
 import Appointments from "../appointments/appointments";
 import UserProfile from "../user-profile/user-profile";
-import ProfilePicture from "../user-profile/user-profile-display-image";
 import UploadImage from "../user-profile/user-profile-upload-image";
 import FindPatients from "../patients/patients";
 import PatientsProfile from "../patients-profile/patients-profile";
@@ -18,7 +17,6 @@ export default class App extends React.Component {
     }
     async componentDidMount() {
         const { data } = await axios.get("/api/app");
-        console.log("data: ", data);
         this.setState(data);
     }
     render() {
@@ -107,15 +105,17 @@ export default class App extends React.Component {
                                     key={props.match.url}
                                     match={props.match}
                                     historia={props.historia}
-                                    recommendations={this.state.recommendations}
-                                    history={this.state.history}
-                                    updatePatientRecommendations={recommendations =>
+                                    patientRecommendations={
+                                        this.state.patientRecommendations
+                                    }
+                                    patientHistory={this.state.patientHistory}
+                                    updatePatientRecommendations={patientRecommendations =>
                                         this.setState({
-                                            recommendations
+                                            patientRecommendations
                                         })
                                     }
-                                    updatePatientHistory={history =>
-                                        this.setState({ history })
+                                    updatePatientHistory={patientHistory =>
+                                        this.setState({ patientHistory })
                                     }
                                 />
                             )}

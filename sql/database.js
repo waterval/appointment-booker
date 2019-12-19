@@ -186,7 +186,7 @@ exports.addInformationAsDoctor = (
             SET history = ($2),
             recommendations = ($3)
             WHERE id IN ($1)
-            returning id, forename, surname, image, krankenkasse_name, krankenkasse_coverage, surgery, hospital, medication, diseases, recommendations, important, history
+            returning id, forename, surname, image, krankenkasse_name AS "krankenkasseName", krankenkasse_coverage AS "krankenkasseCoverage", surgery AS "patientSurgery", hospital AS "patientHospital", medication AS "patientMedication", diseases AS "patientDiseases", recommendations AS "patientRecommendations", important AS "patientImportant", history AS "patientHistory"
             ;`,
             [userId, patientHistory, patientRecommendations]
         )

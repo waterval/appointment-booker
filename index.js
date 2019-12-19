@@ -242,12 +242,12 @@ app.get("/api/patients-profile/:id", async (request, response) => {
 
 app.post("/api/patients-profile/edit/:patientId", async (request, response) => {
     const { patientId } = request.params;
-    const { history, recommendations } = request.body;
+    const { patientHistory, patientRecommendations } = request.body;
     try {
         const otherData = await database.addInformationAsDoctor(
             patientId,
-            history,
-            recommendations
+            patientHistory,
+            patientRecommendations
         );
         response.json({ otherData });
     } catch (error) {

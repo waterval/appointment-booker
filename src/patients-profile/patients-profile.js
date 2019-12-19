@@ -31,16 +31,18 @@ export default class PatientsProfile extends React.Component {
     async saveProfile(event) {
         const { id } = this.props.match.params;
         event.preventDefault();
-        this.props.updatePatientHistory(this.state.history);
-        this.props.updatePatientRecommendations(this.state.recommendations);
+        this.props.updatePatientHistory(this.state.patientHistory);
+        this.props.updatePatientRecommendations(
+            this.state.patientRecommendations
+        );
         this.setState({ saveButton: false });
         this.setState({ editButton: true });
         try {
             const { data } = await axios.post(
                 "/api/patients-profile/edit/" + id,
                 {
-                    history: this.state.history,
-                    recommendations: this.state.recommendations
+                    patientHistory: this.state.patientHistory,
+                    patientRecommendations: this.state.patientRecommendations
                 }
             );
             this.setState(data.otherData);
@@ -79,56 +81,62 @@ export default class PatientsProfile extends React.Component {
                 <h2>Medical history:</h2>
                 {this.state.saveButton && (
                     <textarea
-                        name="history"
+                        name="patientHistory"
                         onChange={this.userInput}
-                        value={this.state.history}
+                        value={this.state.patientHistory}
                     />
                 )}
-                {this.state.editButton && <p>{this.state.history}</p>}
+                {this.state.editButton && <p>{this.state.patientHistory}</p>}
 
                 <h2>Medical recommendations:</h2>
                 {this.state.saveButton && (
                     <textarea
-                        name="recommendations"
+                        name="patientRecommendations"
                         onChange={this.userInput}
-                        value={this.state.recommendations}
+                        value={this.state.patientRecommendations}
                     />
                 )}
-                {this.state.editButton && <p>{this.state.recommendations}</p>}
+                {this.state.editButton && (
+                    <p>{this.state.patientRecommendations}</p>
+                )}
 
                 {this.state.saveButton && (
-                    <button onClick={this.saveProfile}>Save</button>
+                    <div>
+                        <button onClick={this.saveProfile}>Save</button>
+                    </div>
                 )}
                 {this.state.editButton && (
-                    <button onClick={this.editProfile}>Edit</button>
+                    <div>
+                        <button onClick={this.editProfile}>Edit</button>
+                    </div>
                 )}
                 <div>
                     <h2>Krankenkasse:</h2>
-                    <p>{this.state.krankenkasse_name}</p>
+                    <p>{this.state.krankenkasseName}</p>
                 </div>
                 <div>
                     <h2>Coverage:</h2>
-                    <p>{this.state.krankenkasse_coverage}</p>
+                    <p>{this.state.krankenkasseCoverage}</p>
                 </div>
                 <div>
                     <h2>Surgery:</h2>
-                    <p>{this.state.surgery}</p>
+                    <p>{this.state.patientSurgery}</p>
                 </div>
                 <div>
                     <h2>Hospital:</h2>
-                    <p>{this.state.hospital}</p>
+                    <p>{this.state.patientHospital}</p>
                 </div>
                 <div>
                     <h2>Medication:</h2>
-                    <p>{this.state.medication}</p>
+                    <p>{this.state.patientMedication}</p>
                 </div>
                 <div>
                     <h2>Diseases:</h2>
-                    <p>{this.state.diseases}</p>
+                    <p>{this.state.patientDiseases}</p>
                 </div>
                 <div>
                     <h2>Important:</h2>
-                    <p>{this.state.important}</p>
+                    <p>{this.state.patientImportant}</p>
                 </div>
             </div>
         );
