@@ -25,12 +25,11 @@ export default function FindPatients() {
 
     return (
         <div>
-            <h1>Patient finder</h1>
+            <h1>Patient finder (only access by staff)</h1>
             <p>
-                It's important to be able to find your patients on the platform.
-                On their profile it's possible to see the medical information
-                they provided. You can also add their medical history and your
-                medical recommendations.
+                It is important to be able to find your patients on the
+                platform. On their profile it is possible to see the medical
+                information they provided.
             </p>
             <h2>Find a patient:</h2>
 

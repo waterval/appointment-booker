@@ -15,19 +15,19 @@ export default function Appointments({ id: userId }) {
         state =>
             state.appointments &&
             state.appointments
-                .filter(appointment => appointment.patient_id === null)
+                .filter(appointment => appointment.patientId === null)
                 .filter(appointment => appointment.weekday.includes(weekday))
                 .filter(
-                    appointment => appointment.appointment_start >= startTime
+                    appointment => appointment.appointmentStart >= startTime
                 )
-                .filter(appointment => appointment.appointment_end <= endTime)
+                .filter(appointment => appointment.appointmentEnd <= endTime)
                 .sort((a, b) => a.id - b.id)
     );
     const userAppointment = useSelector(
         state =>
             state.appointments &&
             state.appointments
-                .filter(appointment => appointment.patient_id === userId)
+                .filter(appointment => appointment.patientId === userId)
                 .shift()
     );
 
@@ -73,9 +73,9 @@ export default function Appointments({ id: userId }) {
             monthNames[userAppointment.month]
         }
     ${userAppointment.year}, ${userAppointment.weekday} from
-    ${userAppointment.appointment_start}:00
+    ${userAppointment.appointmentStart}:00
     until ${
-    userAppointment.appointment_end
+    userAppointment.appointmentEnd
 }:00. Please add it to your personal calendar.
     `;
     }

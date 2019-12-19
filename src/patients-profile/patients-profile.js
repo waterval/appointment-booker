@@ -66,9 +66,9 @@ export default class PatientsProfile extends React.Component {
                     </h1>
                 </div>
                 <p>
-                    Here you can view information a patient has provided
-                    themselves. You can add a medical history and
-                    recommendations.
+                    On this page you can view information a patient has provided
+                    themselves. Also, it is possible to add their medical
+                    history and your recommendations.
                 </p>
                 <div>
                     <img

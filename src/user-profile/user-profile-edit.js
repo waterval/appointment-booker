@@ -26,7 +26,7 @@ export default function EditInformation() {
             patientSurgery: values.patientSurgery,
             patientHospital: values.patientHospital,
             patientMedication: values.patientMedication,
-            patientDisease: values.patientDisease,
+            patientDiseases: values.patientDiseases,
             patientImportant: values.patientImportant
         });
         setIsEditing(false);
@@ -54,7 +54,7 @@ export default function EditInformation() {
                         Are you diabetic or suffering from heart, lung or kidney
                         disease?
                     </h2>
-                    <p>{values.patientDisease}</p>
+                    <p>{values.patientDiseases}</p>
                     <h2>
                         Is there anything else that is important for us to know?
                     </h2>
@@ -96,9 +96,9 @@ export default function EditInformation() {
                         disease?
                     </h2>
                     <textarea
-                        name="patientDisease"
+                        name="patientDiseases"
                         onChange={handleInputChange}
-                        value={values.patientDisease || ""}
+                        value={values.patientDiseases || ""}
                     />
                     <h2>
                         Is there anything else that is important for us to know?

@@ -8,7 +8,7 @@ export default function ScheduleTimeslot({ timeslots }) {
     return (
         <div>
             <div key={timeslots.id} className="schedule-container">
-                <Link to={`/patients/${timeslots.patient_id}`}>
+                <Link to={`/patients/${timeslots.appointmentPatientId}`}>
                     <img
                         src={timeslots.image || "/patient-icon.jpg"}
                         className="schedule-image"
@@ -22,9 +22,9 @@ export default function ScheduleTimeslot({ timeslots }) {
                     {`${timeslots.forename} ${timeslots.surname}`}
                 </div>
             </div>
-            <p className="schedule-timeslot">{`${timeslots.appointment_start}:00 - ${timeslots.appointment_end}:00`}</p>
+            <p className="schedule-timeslot">{`${timeslots.appointmentStart}:00 - ${timeslots.appointmentEnd}:00`}</p>
             <p className="schedule-timeslot">
-                {timeslots.appointment_type || "regular"} visit
+                {timeslots.appointmentType || "regular"} visit
             </p>
             <button
                 className="schedule-button"

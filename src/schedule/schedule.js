@@ -10,7 +10,7 @@ export default function Schedule({ id: userId }) {
         state =>
             state.patientAppointments &&
             state.patientAppointments
-                .filter(appointment => appointment.patient_id !== null)
+                .filter(appointment => appointment.patientId !== null)
                 .sort((a, b) => a.id - b.id)
     );
 
@@ -52,7 +52,8 @@ export default function Schedule({ id: userId }) {
 
     return (
         <div>
-            <h1>Schedule</h1>
+            <h1>Schedule (only access by staff)</h1>
+            <p>As a doctor, it is important to see who is visiting you:</p>
             <div>
                 {appointmentsPerDay &&
                     Object.keys(appointmentsPerDay).map(appointment => {

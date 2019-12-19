@@ -10,12 +10,12 @@ export default function(state = {}, action) {
             ...state,
             appointments: state.appointments.map(appointment => {
                 if (
-                    appointment.patient_id == action.userId &&
+                    appointment.patientId == action.userId &&
                     appointment.id != action.appointmentId
                 ) {
                     return {
                         ...appointment,
-                        patient_id: null
+                        patientId: null
                     };
                 }
                 if (appointment.id != action.appointmentId) {
@@ -23,7 +23,7 @@ export default function(state = {}, action) {
                 }
                 return {
                     ...appointment,
-                    patient_id: action.userId
+                    patientId: action.userId
                 };
             })
         };
@@ -37,7 +37,7 @@ export default function(state = {}, action) {
                 }
                 return {
                     ...appointment,
-                    patient_id: null
+                    patientId: null
                 };
             })
         };
@@ -57,7 +57,7 @@ export default function(state = {}, action) {
                 }
                 return {
                     ...appointment,
-                    patient_id: null
+                    patientId: null
                 };
             })
         };

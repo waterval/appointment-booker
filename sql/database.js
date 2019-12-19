@@ -37,7 +37,7 @@ exports.getUserData = id => {
     return database
         .query(
             `
-            SELECT id, forename, surname, image, krankenkasse_name, krankenkasse_coverage, surgery, hospital, medication, diseases, recommendations, important, history
+            SELECT id, forename, surname, image, krankenkasse_name AS "krankenkasseName", krankenkasse_coverage AS "krankenkasseCoverage", surgery AS "patientSurgery", hospital AS "patientHospital", medication AS "patientMedication", diseases AS "patientDiseases", recommendations AS "patientRecommendations", important AS "patientImportant", history AS "patientHistory"
             FROM users
             WHERE id IN ($1)
             ;`,
@@ -50,7 +50,7 @@ exports.getAppointments = () => {
     return database
         .query(
             `
-            SELECT id, weekday, day, month, year, appointment_start, appointment_end, appointment_type, patient_id
+            SELECT id, weekday, day, month, year, appointment_start as "appointmentStart", appointment_end as "appointmentEnd", appointment_type as "appointmentType", patient_id as "patientId"
             FROM appointments
             ;`
         )
@@ -104,7 +104,7 @@ exports.addUserInformation = (
     patientSurgery,
     patientHospital,
     patientMedication,
-    patientDisease,
+    patientDiseases,
     patientImportant
 ) => {
     return database
@@ -128,7 +128,7 @@ exports.addUserInformation = (
                 patientSurgery,
                 patientHospital,
                 patientMedication,
-                patientDisease,
+                patientDiseases,
                 patientImportant
             ]
         )
@@ -165,7 +165,7 @@ exports.getPatientAppointments = () => {
     return database
         .query(
             `
-            SELECT appointments.id, appointments.weekday, appointments.day, appointments.month, appointments.year, appointments.appointment_start, appointments.appointment_end, appointments.appointment_type, appointments.patient_id, users.forename, users.surname, users.image
+            SELECT appointments.id, appointments.weekday, appointments.day, appointments.month, appointments.year, appointments.appointment_start AS "appointmentStart", appointments.appointment_end AS "appointmentEnd", appointments.appointment_type as "appointmentType", appointments.patient_id as "appointmentPatientId", users.forename, users.surname, users.image
             FROM users
             JOIN appointments
             ON users.id = appointments.patient_id

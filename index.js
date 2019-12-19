@@ -124,21 +124,7 @@ app.get("/api/app", async (request, response) => {
     const { userId } = request.session;
     try {
         const userData = await database.getUserData(userId);
-        response.json({
-            id: userData.id,
-            forename: userData.forename,
-            surname: userData.surname,
-            image: userData.image,
-            krankenkasseName: userData.krankenkasse_name,
-            krankenkasseType: userData.krankenkasse_coverage,
-            patientSurgery: userData.surgery,
-            patientHospital: userData.hospital,
-            patientMedication: userData.medication,
-            patientDisease: userData.diseases,
-            patientImportant: userData.important,
-            patientHistory: userData.history,
-            patientRecommendations: userData.recommendations
-        });
+        response.json(userData);
     } catch (error) {
         console.log("error inside get /api/app: ", error);
     }
@@ -191,7 +177,7 @@ app.post("/api/user-profile-edit", async (request, response) => {
         patientSurgery,
         patientHospital,
         patientMedication,
-        patientDisease,
+        patientDiseases,
         patientImportant
     } = request.body;
     try {
@@ -202,7 +188,7 @@ app.post("/api/user-profile-edit", async (request, response) => {
             patientSurgery,
             patientHospital,
             patientMedication,
-            patientDisease,
+            patientDiseases,
             patientImportant
         );
         response.json({ results });
