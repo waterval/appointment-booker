@@ -6,38 +6,32 @@ import { Link } from "react-router-dom";
 
 export default function Appointments({ id: userId }) {
     const dispatch = useDispatch();
-    const [startTime, setStartTime] = useState(0);
-    const [endTime, setEndTime] = useState(24);
+    const [startTime, setStartTime] = useState(10);
+    const [endTime, setEndTime] = useState(15);
     const [weekday, setWeekDay] = useState("day");
-    const [appointmentType, setAppointmentType] = useState();
+    const [appointmentType, setAppointmentType] = useState(
+        "regularAppointment"
+    );
 
-    const appointments = useSelector(
+    const availableAppointments = useSelector(
         state =>
             state.appointments &&
             state.appointments
                 .filter(appointment => appointment.patientId === null)
                 .filter(appointment => appointment.weekday.includes(weekday))
                 .filter(
-                    appointment => appointment.appointmentStart >= startTime
+                    appointment =>
+                        appointment.appointmentStartingTime >= startTime
                 )
-                .filter(appointment => appointment.appointmentEnd <= endTime)
+                .filter(
+                    appointment => appointment.appointmentEndingTime <= endTime
+                )
                 .sort((a, b) => a.id - b.id)
-    );
-    const userAppointment = useSelector(
-        state =>
-            state.appointments &&
-            state.appointments
-                .filter(appointment => appointment.patientId === userId)
-                .shift()
     );
 
     useEffect(() => {
         dispatch(getAppointments());
     }, []);
-
-    if (!appointments) {
-        return <p>Page loading...</p>;
-    }
 
     const monthNames = {
         1: "January",
@@ -54,30 +48,53 @@ export default function Appointments({ id: userId }) {
         12: "December"
     };
 
-    let appointmentsPerDay = {};
-    if (appointments) {
-        for (const item of appointments) {
-            const dayTitle = `${item.day} ${monthNames[item.month]} ${
+    const sortAppointmentsPerDate = () => {
+        let appointments = {};
+        for (const item of availableAppointments) {
+            const dateHeaderName = `${item.day} ${monthNames[item.month]} ${
                 item.year
             }, ${item.weekday}:`;
-            if (!appointmentsPerDay[dayTitle]) {
-                appointmentsPerDay[dayTitle] = [];
+            if (!appointments[dateHeaderName]) {
+                appointments[dateHeaderName] = [];
             }
-            appointmentsPerDay[dayTitle].push(item);
+            appointments[dateHeaderName].push(item);
         }
+        return appointments;
+    };
+
+    let sortedAppointments;
+    if (availableAppointments) {
+        sortedAppointments = sortAppointmentsPerDate();
     }
 
-    let showAppointment;
-    if (userAppointment) {
-        showAppointment = `${userAppointment.day} ${
-            monthNames[userAppointment.month]
+    const userSelectedAppointment = useSelector(
+        state =>
+            state.appointments &&
+            state.appointments
+                .filter(appointment => appointment.patientId === userId)
+                .shift()
+    );
+
+    const generateSelectedAppointmentMessage = () => {
+        const appointmentMessage = `${userSelectedAppointment.day} ${
+            monthNames[userSelectedAppointment.month]
         }
-    ${userAppointment.year}, ${userAppointment.weekday} from
-    ${userAppointment.appointmentStart}:00
+    ${userSelectedAppointment.year}, ${userSelectedAppointment.weekday} from
+    ${userSelectedAppointment.appointmentStartingTime}:00
     until ${
-    userAppointment.appointmentEnd
+    userSelectedAppointment.appointmentEndingTime
 }:00. Please add it to your personal calendar.
     `;
+        return appointmentMessage;
+    };
+
+    let selectedAppointment;
+    if (userSelectedAppointment) {
+        selectedAppointment = generateSelectedAppointmentMessage();
+    }
+
+    if (!availableAppointments) {
+        return <p>Page loading...</p>;
     }
 
     return (
@@ -91,30 +108,32 @@ export default function Appointments({ id: userId }) {
             <div className="appointment-status">
                 <h2>Your appointment:</h2>
                 <p>
-                    {showAppointment ||
+                    {selectedAppointment ||
                         "You currently have no appointment. Please click on a timeslot below to book your appointment:"}
                 </p>
-                {showAppointment && (
+                {selectedAppointment && (
                     <button
                         className="appointment-cancel-button"
-                        onClick={e =>
-                            dispatch(cancelAppointment(userAppointment.id))
+                        onClick={event =>
+                            dispatch(
+                                cancelAppointment(userSelectedAppointment.id)
+                            )
                         }
                     >
                         Cancel appointment
                     </button>
                 )}
 
-                {showAppointment && appointmentType == "firstAppointment" && (
+                {selectedAppointment && appointmentType == "firstAppointment" && (
                     <p>
                         Thank you for booking your first appointment. We would
                         like to provide the best care possible, so please tell
                         us a bit more about yourself on your{" "}
-                        <Link to="/patient-profile">user profile</Link>.
+                        <Link to="/user-profile">user profile</Link>.
                     </p>
                 )}
             </div>
-            {!showAppointment && (
+            {!selectedAppointment && (
                 <div className="appointment-options-container">
                     <div>
                         <h4>Weekday:</h4>
@@ -174,22 +193,11 @@ export default function Appointments({ id: userId }) {
                 </div>
             )}
             <div>
-                {appointmentType == "emergencyAppointment" && (
-                    <p className="warning-message">
-                        You have chosen an emergency appointment. Are you or
-                        someone else in immediate danger? Please call{" "}
-                        <a href="callto:112">112</a>. Otherwise please call our
-                        number:{" "}
-                        <a href="callto:0301575000000">030 1575 000 000</a>.
-                    </p>
-                )}
-            </div>
-            <div>
-                {!showAppointment &&
-                    appointmentType != "emergencyAppointment" &&
-                    appointmentsPerDay &&
-                    Object.keys(appointmentsPerDay).map(appointment => {
-                        const day = appointmentsPerDay[appointment];
+                {(appointmentType == "regularAppointment" ||
+                    appointmentType == "firstAppointment") &&
+                    !selectedAppointment &&
+                    Object.keys(sortedAppointments).map(appointment => {
+                        const day = sortedAppointments[appointment];
                         return (
                             <div key={appointment}>
                                 <h3>{appointment}</h3>
@@ -205,11 +213,24 @@ export default function Appointments({ id: userId }) {
                             </div>
                         );
                     })}
-                {!appointmentsPerDay && (
-                    <div>
+            </div>
+            <div>
+                {appointmentType == "emergencyAppointment" && (
+                    <p className="warning-message">
+                        You have chosen an emergency appointment. Are you or
+                        someone else in immediate danger? Please call{" "}
+                        <a href="callto:112">112</a>. Otherwise please call our
+                        number:{" "}
+                        <a href="callto:0301575000000">030 1575 000 000</a>.
+                    </p>
+                )}
+            </div>
+            <div>
+                {!sortedAppointments && (
+                    <p>
                         There are no appointments available. Please try other
                         options.
-                    </div>
+                    </p>
                 )}
             </div>
         </div>
