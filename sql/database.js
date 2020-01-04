@@ -50,7 +50,7 @@ exports.getAppointments = () => {
     return database
         .query(
             `
-            SELECT id, weekday, day, month, year, appointment_start as "appointmentStart", appointment_end as "appointmentEnd", appointment_type as "appointmentType", patient_id as "patientId"
+            SELECT id, weekday, day, month, year, appointment_start as "appointmentStartingTime", appointment_end as "appointmentEndingTime", appointment_type as "appointmentType", patient_id as "patientId"
             FROM appointments
             ;`
         )
@@ -165,7 +165,7 @@ exports.getPatientAppointments = () => {
     return database
         .query(
             `
-            SELECT appointments.id, appointments.weekday, appointments.day, appointments.month, appointments.year, appointments.appointment_start AS "appointmentStart", appointments.appointment_end AS "appointmentEnd", appointments.appointment_type as "appointmentType", appointments.patient_id as "appointmentPatientId", users.forename, users.surname, users.image
+            SELECT appointments.id, appointments.weekday, appointments.day, appointments.month, appointments.year, appointments.appointment_start AS "appointmentStartingTime", appointments.appointment_end AS "appointmentEndingTime", appointments.appointment_type as "appointmentType", appointments.patient_id as "appointmentPatientId", users.forename, users.surname, users.image
             FROM users
             JOIN appointments
             ON users.id = appointments.patient_id

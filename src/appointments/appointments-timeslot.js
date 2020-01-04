@@ -4,7 +4,7 @@ import { bookAppointment } from "./appointments-actions";
 
 export default function AppointmentsTimeslot({ timeslots, userId }) {
     const dispatch = useDispatch();
-    let timeNotation = `${timeslots.appointmentStart}:00 - ${timeslots.appointmentEnd}:00`;
+    let timeNotation = `${timeslots.appointmentStartingTime}:00 - ${timeslots.appointmentEndingTime}:00`;
     return (
         <div className="appointment-button-container">
             <button

@@ -22,7 +22,7 @@ export default function ScheduleTimeslot({ timeslots }) {
                     {`${timeslots.forename} ${timeslots.surname}`}
                 </div>
             </div>
-            <p className="schedule-timeslot">{`${timeslots.appointmentStart}:00 - ${timeslots.appointmentEnd}:00`}</p>
+            <p className="schedule-timeslot">{`${timeslots.appointmentStartingTime}:00 - ${timeslots.appointmentEndingTime}:00`}</p>
             <p className="schedule-timeslot">
                 {timeslots.appointmentType || "regular"} visit
             </p>
