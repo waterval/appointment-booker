@@ -4,14 +4,14 @@ export async function getPatientAppointments() {
     const { data } = await axios.get("/api/schedule");
     return {
         type: "GET_SCHEDULE",
-        patientAppointments: data.patientAppointments
+        appointments: data.appointments
     };
 }
 
-export async function cancelPatientAppointment(appointmentId) {
+export async function cancelAppointment(appointmentId) {
     await axios.post(`/api/appointments/cancel/${appointmentId}`);
     return {
-        type: "CANCEL_PATIENT_APPOINTMENT",
+        type: "CANCEL_APPOINTMENT",
         appointmentId
     };
 }

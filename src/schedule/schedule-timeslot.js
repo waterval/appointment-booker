@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { cancelPatientAppointment } from "./schedule-actions";
+import { cancelAppointment } from "./schedule-actions";
 import { Link } from "react-router-dom";
 
 export default function ScheduleTimeslot({ timeslots }) {
@@ -12,9 +12,9 @@ export default function ScheduleTimeslot({ timeslots }) {
                     <img
                         src={timeslots.image || "/patient-icon.jpg"}
                         className="schedule-image"
-                        onError={e => {
-                            e.target.onerror = null;
-                            e.target.src = "/patient-icon.jpg";
+                        onError={event => {
+                            event.target.onerror = null;
+                            event.target.src = "/patient-icon.jpg";
                         }}
                     />
                 </Link>
@@ -28,7 +28,7 @@ export default function ScheduleTimeslot({ timeslots }) {
             </p>
             <button
                 className="schedule-button"
-                onClick={e => dispatch(cancelPatientAppointment(timeslots.id))}
+                onClick={event => dispatch(cancelAppointment(timeslots.id))}
             >
                 Cancel
             </button>

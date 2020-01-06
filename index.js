@@ -260,8 +260,8 @@ app.post("/api/patients-profile/edit/:patientId", async (request, response) => {
 
 app.get("/api/schedule", async (request, response) => {
     try {
-        const patientAppointments = await database.getPatientAppointments();
-        response.json({ patientAppointments });
+        const appointments = await database.getPatientAppointments();
+        response.json({ appointments });
     } catch (error) {
         console.log("error inside get /api/schedule: ", error);
     }

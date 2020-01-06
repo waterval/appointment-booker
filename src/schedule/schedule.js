@@ -8,8 +8,8 @@ export default function Schedule({ id: userId }) {
 
     const appointments = useSelector(
         state =>
-            state.patientAppointments &&
-            state.patientAppointments
+            state.appointments &&
+            state.appointments
                 .filter(appointment => appointment.patientId !== null)
                 .sort((a, b) => a.id - b.id)
     );
