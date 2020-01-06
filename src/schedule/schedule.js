@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPatientAppointments } from "./schedule-actions";
 import ScheduleTimeslot from "./schedule-timeslot";
+import { sortAppointmentsPerDate } from "../app/utils.js";
 
 export default function Schedule({ id: userId }) {
     const dispatch = useDispatch();
 
-    const appointments = useSelector(
+    const scheduledAppointments = useSelector(
         state =>
             state.appointments &&
             state.appointments
@@ -18,36 +19,13 @@ export default function Schedule({ id: userId }) {
         dispatch(getPatientAppointments());
     }, []);
 
-    if (!appointments) {
-        return <p>Page loading...</p>;
+    let sortedAppointments;
+    if (scheduledAppointments) {
+        sortedAppointments = sortAppointmentsPerDate(scheduledAppointments);
     }
 
-    const monthNames = {
-        1: "January",
-        2: "February",
-        3: "March",
-        4: "April",
-        5: "May",
-        6: "June",
-        7: "July",
-        8: "August",
-        9: "September",
-        10: "October",
-        11: "November",
-        12: "December"
-    };
-
-    let appointmentsPerDay = {};
-    if (appointments) {
-        for (const item of appointments) {
-            const dayTitle = `${item.day} ${monthNames[item.month]} ${
-                item.year
-            }, ${item.weekday}:`;
-            if (!appointmentsPerDay[dayTitle]) {
-                appointmentsPerDay[dayTitle] = [];
-            }
-            appointmentsPerDay[dayTitle].push(item);
-        }
+    if (!scheduledAppointments) {
+        return <p>Page loading...</p>;
     }
 
     return (
@@ -55,9 +33,9 @@ export default function Schedule({ id: userId }) {
             <h1>Schedule (only access by staff)</h1>
             <p>As a doctor, it is important to see who is visiting you:</p>
             <div>
-                {appointmentsPerDay &&
-                    Object.keys(appointmentsPerDay).map(appointment => {
-                        const day = appointmentsPerDay[appointment];
+                {sortedAppointments &&
+                    Object.keys(sortedAppointments).map(appointment => {
+                        const day = sortedAppointments[appointment];
                         return (
                             <div key={appointment}>
                                 <h3>{appointment}</h3>

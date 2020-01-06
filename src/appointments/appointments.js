@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAppointments, cancelAppointment } from "./appointments-actions";
 import AppointmentsTimeslot from "./appointments-timeslot";
 import { Link } from "react-router-dom";
+import { sortAppointmentsPerDate, monthNames } from "../app/utils.js";
 
 export default function Appointments({ id: userId }) {
     const dispatch = useDispatch();
@@ -33,38 +34,9 @@ export default function Appointments({ id: userId }) {
         dispatch(getAppointments());
     }, []);
 
-    const monthNames = {
-        1: "January",
-        2: "February",
-        3: "March",
-        4: "April",
-        5: "May",
-        6: "June",
-        7: "July",
-        8: "August",
-        9: "September",
-        10: "October",
-        11: "November",
-        12: "December"
-    };
-
-    const sortAppointmentsPerDate = () => {
-        let appointments = {};
-        for (const item of availableAppointments) {
-            const dateHeaderName = `${item.day} ${monthNames[item.month]} ${
-                item.year
-            }, ${item.weekday}:`;
-            if (!appointments[dateHeaderName]) {
-                appointments[dateHeaderName] = [];
-            }
-            appointments[dateHeaderName].push(item);
-        }
-        return appointments;
-    };
-
     let sortedAppointments;
     if (availableAppointments) {
-        sortedAppointments = sortAppointmentsPerDate();
+        sortedAppointments = sortAppointmentsPerDate(availableAppointments);
     }
 
     const userSelectedAppointment = useSelector(
