@@ -115,10 +115,6 @@ export default class PatientsProfile extends React.Component {
                     <p>{this.state.krankenkasseName}</p>
                 </div>
                 <div>
-                    <h2>Coverage:</h2>
-                    <p>{this.state.krankenkasseCoverage}</p>
-                </div>
-                <div>
                     <h2>Surgery:</h2>
                     <p>{this.state.patientSurgery}</p>
                 </div>
