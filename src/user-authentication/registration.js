@@ -91,7 +91,11 @@ export default class Registration extends React.Component {
                         />
                     </div>
                 </label>
-                <button onClick={this.createAccount} className="welcome-button">
+                <button
+                    onClick={this.createAccount}
+                    id="registration-button"
+                    className="welcome-button"
+                >
                     Create free account
                 </button>
                 <p>

@@ -70,7 +70,11 @@ export default class Login extends React.Component {
                         />
                     </div>
                 </label>
-                <button onClick={this.userLogin} className="welcome-button">
+                <button
+                    onClick={this.userLogin}
+                    id="login-button"
+                    className="welcome-button"
+                >
                     Log in
                 </button>
                 <p>
